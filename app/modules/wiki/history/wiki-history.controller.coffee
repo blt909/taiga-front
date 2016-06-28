@@ -17,19 +17,22 @@
 # File: wiki-history.controller.coffee
 ###
 
+taiga = @.taiga
+
 module = angular.module("taigaWikiHistory")
 
 class WikiHistoryController
     @.$inject = [
-        "tgResources"
+        "tgWikiHistoryService"
     ]
 
-    constructor: (@rs) ->
-        @._loadHistory()
+    constructor: (@wikiHistoryService) ->
+        taiga.defineImmutableProperty @, 'historyEntries', () => return @wikiHistoryService.historyEntries
 
-    _loadHistory: () ->
-        @rs.wikiHistory.getWikiHistory(@.wikiId).then (activities) =>
-            if activities.size
-                @.activities = activities.reverse()
+    initializeHistoryEntries: (wikiId) ->
+        if wikiId
+            @wikiHistoryService.setWikiId(wikiId)
+
+        @wikiHistoryService.loadHistoryEntries()
 
 module.controller("WikiHistoryCtrl", WikiHistoryController)

@@ -21,13 +21,13 @@ module = angular.module('taigaWikiHistory')
 
 WikiHistoryEntryDirective = () ->
     link = (scope, el, attr) ->
-        scope.singleActivity = scope.activity.toJS()
+        scope.singleHistoryEntry = scope.historyEntry.toJS()
 
     return {
         link: link,
         templateUrl:"wiki/history/wiki-history-entry.html",
         scope: {
-            activity: "<"
+            historyEntry: "<"
         }
     }
 

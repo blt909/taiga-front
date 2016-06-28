@@ -22,19 +22,18 @@ describe "WikiHistorySection", ->
     controller = null
     mocks = {}
 
-    _mockTgResources = () ->
-        mocks.tgResources = {
-            wikiHistory: {
-                getWikiHistory: sinon.stub()
-            }
+    _mockTgWikiHistoryService = () ->
+        mocks.tgWikiHistoryService = {
+            setWikiId: sinon.stub(),
+            loadHistoryEntries: sinon.stub()
         }
 
-        provide.value "tgResources", mocks.tgResources
+        provide.value "tgWikiHistoryService", mocks.tgWikiHistoryService
 
     _mocks = () ->
         module ($provide) ->
             provide = $provide
-            _mockTgResources()
+            _mockTgWikiHistoryService()
             return null
 
     beforeEach ->
@@ -42,19 +41,22 @@ describe "WikiHistorySection", ->
 
         _mocks()
 
-
         inject ($controller) ->
             controller = $controller
-        promise = mocks.tgResources.wikiHistory.getWikiHistory.promise().resolve()
 
-    it "load wiki historic", (done) ->
+    it "initialize histori entries with id", ->
+        wikiId = 42
+
         historyCtrl = controller "WikiHistoryCtrl"
+        historyCtrl.initializeHistoryEntries(wikiId)
 
-        historyCtrl._getActivity = sinon.stub()
+        expect(mocks.tgWikiHistoryService.setWikiId).to.be.calledOnce
+        expect(mocks.tgWikiHistoryService.setWikiId).to.be.calledWith(wikiId)
+        expect(mocks.tgWikiHistoryService.loadHistoryEntries).to.be.calledOnce
 
-        wikiID = 45
-        promise = mocks.tgResources.wikiHistory.getWikiHistory.withArgs(wikiID).promise().resolve()
+    it "initialize history entries without id",  ->
+        historyCtrl = controller "WikiHistoryCtrl"
+        historyCtrl.initializeHistoryEntries()
 
-        historyCtrl._loadHistory().then (activities) ->
-            expect(historyCtrl._getActivity).have.been.calledWithExactly(activities)
-            done()
+        expect(mocks.tgWikiHistoryService.setWikiId).to.not.be.calledOnce
+        expect(mocks.tgWikiHistoryService.loadHistoryEntries).to.be.calledOnce

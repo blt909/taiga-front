@@ -218,7 +218,8 @@ module.directive("tgWikiSummary", ["$log", "$tgTemplate", "$compile", "$translat
 ## Editable Wiki Content Directive
 #############################################################################
 
-EditableWikiContentDirective = ($window, $document, $repo, $confirm, $loading, $analytics, $qqueue, $translate) ->
+EditableWikiContentDirective = ($window, $document, $repo, $confirm, $loading, $analytics, $qqueue, $translate,
+                                $wikiHistoryService) ->
     link = ($scope, $el, $attrs, $model) ->
         isEditable = ->
             return $scope.project.my_permissions.indexOf("modify_wiki_page") != -1
@@ -257,6 +258,7 @@ EditableWikiContentDirective = ($window, $document, $repo, $confirm, $loading, $
 
                 $model.$setViewValue wikiPage.clone()
 
+                $wikiHistoryService.loadHistoryEntries()
                 $confirm.notify("success")
                 switchToReadMode()
 
@@ -333,4 +335,5 @@ EditableWikiContentDirective = ($window, $document, $repo, $confirm, $loading, $
     }
 
 module.directive("tgEditableWikiContent", ["$window", "$document", "$tgRepo", "$tgConfirm", "$tgLoading",
-                                           "$tgAnalytics", "$tgQqueue", "$translate", EditableWikiContentDirective])
+                                           "$tgAnalytics", "$tgQqueue", "$translate", "tgWikiHistoryService",
+                                           EditableWikiContentDirective])

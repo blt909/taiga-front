@@ -17,17 +17,25 @@
 # File: wiki-history.directive.coffee
 ###
 
+bindOnce = @.taiga.bindOnce
+
 module = angular.module('taigaWikiHistory')
 
+
 WikiHistoryDirective = () ->
+    link = (scope, el, attrs, ctrl) ->
+        bindOnce scope, 'vm.wikiId', (value) ->
+            ctrl.initializeHistoryEntries(value)
+
     return {
-        templateUrl:"wiki/history/wiki-history.html",
-        controller: "WikiHistoryCtrl",
-        controllerAs: "vm",
-        bindToController: true,
-        scope: {
+        scope: {},
+        bindToController: {
             wikiId: "<"
         }
+        controller: "WikiHistoryCtrl",
+        controllerAs: "vm",
+        templateUrl:"wiki/history/wiki-history.html",
+        link: link
     }
 
 module.directive("tgWikiHistory", WikiHistoryDirective)

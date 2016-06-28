@@ -20,18 +20,12 @@
 module = angular.module('taigaWikiHistory')
 
 WikiHistoryDiffDirective = () ->
-    link = (scope, el, attr) ->
-        console.log 'key', scope.key, 'diff', scope.diff
-
     return {
-        link: link,
         templateUrl:"wiki/history/wiki-history-diff.html",
         scope: {
             key: "<",
             diff: "<"
         }
     }
-
-WikiHistoryDiffDirective.$inject = []
 
 module.directive("tgWikiHistoryDiff", WikiHistoryDiffDirective)

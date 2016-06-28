@@ -1,13 +1,17 @@
+
+//- New attachment added
 .diff-attachments-new(
     ng-if="diff.new.length"
     ng-repeat="newAttachment in diff.new"
 )
     span.key(translate="ACTIVITY.NEW_ATTACHMENT")
-    span.diff {{newAttachment.filename}}
+        span.diff {{newAttachment.filename}}
+
+//- Attachment updated
 .diff-attachments-update(
     ng-if="diff.changed.length"
     ng-repeat="editAttachment in diff.changed"
-) 
+)
     span.key(
         translate="ACTIVITY.UPDATED_ATTACHMENT"
         translate-values="{filename: editAttachment.filename}"
@@ -28,7 +32,8 @@
             svg-icon="icon-arrow-right"
         )
         span {{editAttachment.changes.description[1]}}
-        
+
+//- Attachment deleted
 .diff-attachments-deleted(
     ng-if="diff.deleted.length"
     ng-repeat="deletedAttachment in diff.deleted"
