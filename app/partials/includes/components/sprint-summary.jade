@@ -1,29 +1,48 @@
 div.summary.large-summary
     div.large-summary-wrapper
-        div.summary-progress-wrapper
+        .summary-progress-wrapper
             div.summary-progress-bar(tg-progress-bar="stats.completedPercentage")
             div.data
-                span.number(ng-bind="stats.completedPercentage + '%'")
+                 span.number(ng-bind="stats.completedPercentage + '%'")
 
-        div.summary-stats
-            span.number(ng-bind="stats.totalPointsSum|default:'--'")
-            span.description(translate="BACKLOG.SPRINT_SUMMARY.TOTAL_POINTS")
-        div.summary-stats
-            span.number(ng-bind="stats.completedPointsSum|default:'--'")
-            span.description(translate="BACKLOG.SPRINT_SUMMARY.COMPLETED_POINTS")
+        .stats-wrapper(ng-class="{'show-role-points': showRolePoints}")
+            .main-summary-stats
+                a.summary-stats.toggle-points-per-role(
+                    href=""
+                    ng-click="showRolePoints = true"
+                )
+                    span.number(ng-bind="stats.totalPointsSum|default:'--'")
+                    span.description(translate="BACKLOG.SPRINT_SUMMARY.TOTAL_POINTS")
+                    tg-svg(svg-icon="icon-arrow-down")
+                div.summary-stats
+                    span.number(ng-bind="stats.completedPointsSum|default:'--'")
+                    span.description(translate="BACKLOG.SPRINT_SUMMARY.COMPLETED_POINTS")
 
-        div.summary-stats
-            tg-svg(svg-icon="icon-bulk")
-            span.number(ng-bind="stats.openTasks|default:'--'")
-            span.description(translate="BACKLOG.SPRINT_SUMMARY.OPEN_TASKS")
-        div.summary-stats
-            span.number(ng-bind="stats.completed_tasks|default:'--'")
-            span.description(translate="BACKLOG.SPRINT_SUMMARY.CLOSED_TASKS")
+                div.summary-stats
+                    tg-svg(svg-icon="icon-bulk")
+                    span.number(ng-bind="stats.openTasks|default:'--'")
+                    span.description(translate="BACKLOG.SPRINT_SUMMARY.OPEN_TASKS")
+                div.summary-stats
+                    span.number(ng-bind="stats.completed_tasks|default:'--'")
+                    span.description(translate="BACKLOG.SPRINT_SUMMARY.CLOSED_TASKS")
 
-        div.summary-stats(title="{{'COMMON.IOCAINE_TEXT' | translate}}")
-            tg-svg(svg-icon="icon-iocaine")
-            span.number(ng-bind="stats.iocaine_doses|default:'--'")
-            span.description(translate="BACKLOG.SPRINT_SUMMARY.IOCAINE_DOSES")
+                div.summary-stats(title="{{'COMMON.IOCAINE_TEXT' | translate}}")
+                    tg-svg(svg-icon="icon-iocaine")
+                    span.number(ng-bind="stats.iocaine_doses|default:'--'")
+                    span.description(translate="BACKLOG.SPRINT_SUMMARY.IOCAINE_DOSES")
+
+            .points-per-role-stats
+                a.points-per-role-stats-title.toggle-points-per-role(
+                    href=""
+                    ng-click="showRolePoints = false"
+                )
+                    tg-svg(svg-icon="icon-arrow-up")
+                    span(translate="BACKLOG.SPRINT_SUMMARY.POINTS_PER_ROLE")
+
+                .points-per-role-stats-content
+                    .summary-stats(ng-repeat="rolePoint in pointsByRole")
+                        span.number {{rolePoint.points}}
+                        span.description {{rolePoint.name}}
 
     div.stats.toggle-analytics-visibility(title="{{'BACKLOG.SPRINT_SUMMARY.SHOW_STATISTICS_TITLE' | translate}}")
         tg-svg(svg-icon="icon-graph")

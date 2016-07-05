@@ -6,9 +6,11 @@ $summary-background: $grayer;
     color: $white;
     display: flex;
     flex-wrap: wrap;
+    height: 65px;
     justify-content: flex-start;
     margin-bottom: 2rem;
-    padding: 1em;
+    overflow: hidden;
+    padding: 1rem;
     .summary-stats {
         display: flex;
         margin: 0 .5rem;
@@ -67,6 +69,33 @@ $summary-background: $grayer;
         .graph {
             fill: darken($gray-light, 20%);
             transition: fill .2s;
+        }
+    }
+    .toggle-points-per-role {
+        color: $white;
+    }
+    .main-summary-stats {
+        display: flex;
+        transform: translateY(0);
+        transition: all .2s ease-in-out;
+    }
+    .points-per-role-stats {
+        transform: translateY(35px);
+        transition: all .2s ease-in-out;
+        .number {
+            font-size: 1rem;
+        }
+    }
+    .points-per-role-stats-content {
+        display: flex;
+        padding-left: 1.5rem;
+    }
+    .show-role-points {
+        .points-per-role-stats {
+            transform: translateY(-35px);
+        }
+        .main-summary-stats {
+            transform: translateY(-65px);
         }
     }
 }
