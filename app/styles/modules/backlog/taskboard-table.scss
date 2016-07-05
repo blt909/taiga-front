@@ -44,14 +44,15 @@ $column-margin: 0 10px 0 0;
 .taskboard-table {
     display: flex;
     flex-direction: column;
-    height: 100%;
     overflow: hidden;
     width: 100%;
 }
 
 .taskboard-table-header {
-    margin-bottom: .5rem;
-    min-height: 40px;
+    flex-basis: 38px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    min-height: 38px;
     position: relative;
     width: 100%;
     .taskboard-table-inner {
@@ -117,7 +118,8 @@ $column-margin: 0 10px 0 0;
 }
 
 .taskboard-table-body {
-    height: 100%;
+    flex: 1;
+    margin-bottom: 5rem;
     overflow: auto;
     width: 100%;
     .task-column {
